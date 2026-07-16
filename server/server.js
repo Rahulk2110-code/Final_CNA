@@ -90,11 +90,17 @@ app.post("/api/login", (req, res) => {
 // The React frontend is now hosted separately on Netlify.
 // This API server only serves the /api/* routes.
 // ─── Serve React Frontend (Production) ─────────────────────
-app.use(express.static(path.join(__dirname, "../client/dist")));
+const fs = require("fs");
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
-});
+const clientPath = path.join(__dirname, "../client/dist");
+
+if (fs.existsSync(clientPath)) {
+  app.use(express.static(clientPath));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(clientPath, "index.html"));
+  });
+}
 
 // ─── Start Server ───────────────────────────────────────────
 app.listen(PORT, () => {
