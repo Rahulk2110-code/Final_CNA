@@ -1,16 +1,15 @@
 # ═══════════════════════════════════════════════════════════════
-#  RVCE Todo App & Jenkins — Docker Compose Configuration
+#  RVCE Todo App — Docker Compose Configuration
 # ═══════════════════════════════════════════════════════════════
 #
 #  Usage:
-#    docker compose up -d        # Start App and Jenkins
-#    docker compose down         # Stop all services
+#    docker compose up -d        # Start Application
+#    docker compose down         # Stop Application
 #
 # ═══════════════════════════════════════════════════════════════
 
-version: "3.8"
-
 services:
+
   # ── Todo Application ──────────────────────────────────────
   todo-app:
     build:
@@ -34,22 +33,7 @@ services:
     networks:
       - todo-network
 
-  # ── Jenkins CI/CD Server ──────────────────────────────────
-  jenkins:
-    image: jenkins/jenkins:lts
-    container_name: jenkins-lab
-    ports:
-      - "8080:8080"
-      - "50000:50000"
-    volumes:
-      - jenkins-data:/var/jenkins_home
-    restart: unless-stopped
-    networks:
-      - todo-network
 
 networks:
   todo-network:
     driver: bridge
-
-volumes:
-  jenkins-data:

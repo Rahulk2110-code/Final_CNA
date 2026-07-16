@@ -27,7 +27,7 @@ WORKDIR /app
 COPY client/package*.json ./client/
 
 # Install client dependencies
-RUN cd client && npm ci
+RUN cd client && npm install --include=optional
 
 # Copy the rest of the client source code
 COPY client/ ./client/
